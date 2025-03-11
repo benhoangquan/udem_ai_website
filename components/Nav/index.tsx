@@ -10,7 +10,7 @@ export const Nav = () => {
           <Link href="/" className="px-4">
             Home
           </Link>
-          <Link href="#" className="px-4">
+          <Link href="/activities" className="px-4">
             Activities
           </Link>
 
@@ -26,7 +26,7 @@ export const Nav = () => {
               <Link href="/resources/projects" className="block px-4 py-2 hover:bg-amber-700">
                 Projects
               </Link>
-              <Link href="/resources/tools" className="block px-4 py-2 hover:bg-amber-700">
+              <Link href="/resources/aitools" className="block px-4 py-2 hover:bg-amber-700">
                 AI Tools
               </Link>
             </PopoverPanel>
@@ -37,19 +37,19 @@ export const Nav = () => {
               Opportunities
             </PopoverButton>
             <PopoverPanel className="absolute left-0 mt-2 w-48 bg-amber-950 border rounded shadow-lg">
-              <Link href="/resources/library" className="block px-4 py-2 hover:bg-amber-700">
+              <Link href="/opportunities/volunteer" className="block px-4 py-2 hover:bg-amber-700">
                 Volunteer
               </Link>
-              <Link href="/resources/projects" className="block px-4 py-2 hover:bg-amber-700">
+              <Link href="/opportunities/leadership" className="block px-4 py-2 hover:bg-amber-700">
                 Leadership
               </Link>
-              <Link href="/resources/tools" className="block px-4 py-2 hover:bg-amber-700">
+              <Link href="/opportunities/collaboration" className="block px-4 py-2 hover:bg-amber-700">
                 Collaboration
               </Link>
             </PopoverPanel>
           </Popover>
 
-          <Link href="#" className="px-4">
+          <Link href="/leaderboard" className="px-4"> 
             Leaderboard
           </Link>
           <Link href="https://discord.com/invite/YOUR_DISCORD_INVITE" target="_blank" rel="noopener noreferrer" className="px-4 text-gray-200 hover:text-blue-500">
