@@ -67,7 +67,7 @@ export async function getEvents() {
               zoom
             }
             description
-            featuredImage {
+            featureImage {
               node {
                 sourceUrl
               }
