@@ -9,7 +9,7 @@ export const PostBlock = ({ post }: { post: any }) => {
             <Link href={`/blog/${post.slug}`}>
                 <div className="relative h-80 transition-all duration-200 ease-linear hover:-translate-y-[3px]">
                     <Image
-                        src={post.featuredImage.node.sourceUrl ?? defaultImage}
+                        src={post.featuredImage?.node.sourceUrl ?? defaultImage}
                         fill
                         alt={post.title}
                         className="absolute rounded-md h-full w-full object-cover"
@@ -18,7 +18,10 @@ export const PostBlock = ({ post }: { post: any }) => {
             </Link>
             <Link href={`/blog/${post.slug}`} className="post-content my-4">
                 <h3 className="text-2xl py-4">{post.title}</h3>
-                <p className="italic">{post.excerpt}</p>
+                <div 
+                    className="text-gray-300 mb-4"
+                    dangerouslySetInnerHTML={{ __html: post.excerpt}}
+                />
             </Link>
         </div>
     );

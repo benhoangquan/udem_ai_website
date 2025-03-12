@@ -11,7 +11,6 @@ export default function HomePage({ posts }: { posts: any }) {
         <>
             <Hero />
             <ActivitiesPage />
-            <CalendarPage />
             <PostsPage posts={posts} />
         </>
     );
