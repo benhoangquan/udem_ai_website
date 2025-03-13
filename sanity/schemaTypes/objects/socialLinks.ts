@@ -1,37 +1,75 @@
 export default {
   name: 'socialLinks',
-  title: 'Social Links',
+  title: 'Social Media Links',
   type: 'object',
   fields: [
     {
-      name: 'github',
-      title: 'GitHub',
+      name: 'facebook',
+      title: 'Facebook URL',
       type: 'url',
-      description: 'GitHub profile URL',
-    },
-    {
-      name: 'linkedin',
-      title: 'LinkedIn',
-      type: 'url',
-      description: 'LinkedIn profile URL',
     },
     {
       name: 'twitter',
-      title: 'Twitter',
+      title: 'Twitter URL',
       type: 'url',
-      description: 'Twitter profile URL',
     },
     {
-      name: 'website',
-      title: 'Personal Website',
+      name: 'instagram',
+      title: 'Instagram URL',
       type: 'url',
-      description: 'Personal website or portfolio URL',
     },
     {
-      name: 'scholar',
-      title: 'Google Scholar',
+      name: 'linkedin',
+      title: 'LinkedIn URL',
       type: 'url',
-      description: 'Google Scholar profile URL',
-    }
+    },
+    {
+      name: 'github',
+      title: 'GitHub URL',
+      type: 'url',
+    },
+    {
+      name: 'youtube',
+      title: 'YouTube URL',
+      type: 'url',
+    },
+    {
+      name: 'discord',
+      title: 'Discord URL',
+      type: 'url',
+    },
+    {
+      name: 'telegram',
+      title: 'Telegram URL',
+      type: 'url',
+    },
+    {
+      name: 'customLinks',
+      title: 'Custom Social Links',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'platform',
+              title: 'Platform Name',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+            },
+            {
+              name: 'icon',
+              title: 'Icon Name',
+              type: 'string',
+              description: 'Name of the icon to use (if using an icon library)',
+            },
+          ],
+        },
+      ],
+    },
   ],
 } 

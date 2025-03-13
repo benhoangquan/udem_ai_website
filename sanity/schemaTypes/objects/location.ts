@@ -18,39 +18,7 @@ export default {
     {
       name: 'address',
       title: 'Address',
-      type: 'object',
-      fields: [
-        {
-          name: 'street',
-          title: 'Street Address',
-          type: 'string',
-        },
-        {
-          name: 'city',
-          title: 'City',
-          type: 'string',
-        },
-        {
-          name: 'state',
-          title: 'State/Province',
-          type: 'string',
-        },
-        {
-          name: 'postalCode',
-          title: 'Postal Code',
-          type: 'string',
-        },
-        {
-          name: 'country',
-          title: 'Country',
-          type: 'string',
-        },
-      ],
-    },
-    {
-      name: 'coordinates',
-      title: 'Coordinates',
-      type: 'geopoint',
+      type: 'string',
     },
     {
       name: 'directions',
