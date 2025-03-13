@@ -8,7 +8,7 @@ const COUNT = 1
 const eventTypes = ['workshop', 'talk', 'hackathon', 'social', 'other']
 const statusTypes = ['upcoming', 'ongoing', 'past', 'cancelled']
 
-async function createEventData() {
+export default async function createEventData() {
   console.log(`Create new event data with...`)
   console.log(`Project ID: ${client.config().projectId}`)
   console.log(`Dataset: ${client.config().dataset}`)

@@ -4,7 +4,7 @@ import {getCliClient} from 'sanity/cli'
 
 const client = getCliClient()
 
-async function createGeneralInfoData() {
+export default async function createGeneralInfoData() {
   console.log(`Create new general info data with...`)
   console.log(`Project ID: ${client.config().projectId}`)
   console.log(`Dataset: ${client.config().dataset}`)

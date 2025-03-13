@@ -10,7 +10,7 @@ const executivePositions = ['President', 'Vice President', 'Secretary', 'Treasur
 const statusTypes = ['active', 'inactive', 'suspended']
 const contributionTypes = ['project', 'event', 'workshop', 'content', 'other']
 
-async function createMemberData() {
+export default async function createMemberData() {
   console.log(`Create new member data with...`)
   console.log(`Project ID: ${client.config().projectId}`)
   console.log(`Dataset: ${client.config().dataset}`)

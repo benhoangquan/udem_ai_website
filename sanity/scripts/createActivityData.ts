@@ -12,7 +12,7 @@ const locationTypes = ['in_person', 'online', 'hybrid']
 const resourceTypes = ['slides', 'code', 'document', 'video', 'other']
 const statusTypes = ['planned', 'open', 'full', 'in_progress', 'completed', 'cancelled']
 
-async function createActivityData() {
+export default async function createActivityData() {
   console.log(`Create new data with...`)
   console.log(`Project ID: ${client.config().projectId}`)
   console.log(`Dataset: ${client.config().dataset}`)
