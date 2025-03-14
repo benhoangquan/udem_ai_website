@@ -1,27 +1,31 @@
 import { GetStaticProps } from "next";
-
 import { Hero } from "@/components/Hero";
-import { getPosts } from "@/lib/service";
-import CalendarPage from "./calendar";
-import PostsPage from "./posts";
-import ActivitiesPage from "./activities";
+import { getGeneralInfo, getAllActivities } from "@/lib/sanity/queries";
+import { SanityGeneralInfo, SanityActivity } from "@/lib/types";
+import { ActivityCarousel } from "@/components/Activities/ActivityCarousel";
 
-export default function HomePage({ posts }: { posts: any }) {
+interface HomePageProps {
+    generalInfo: SanityGeneralInfo;
+    activities: SanityActivity[];
+}
+
+export default function HomePage({ generalInfo, activities }: HomePageProps) {
     return (
         <>
-            <Hero />
-            <ActivitiesPage />
-            <PostsPage posts={posts} />
+            <Hero generalInfo={generalInfo} />
+            <ActivityCarousel activities={activities} title="What Do We Do?" />
         </>
     );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const posts = await getPosts(100); // retrieve first 100 posts
+    const generalInfo = await getGeneralInfo();
+    const activities = await getAllActivities();
 
     return {
         props: {
-            posts,
+            generalInfo,
+            activities,
         },
         revalidate: 3600,
     };
