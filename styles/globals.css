@@ -24,6 +24,11 @@ body {
   overflow-x: hidden;
 }
 
+/* Add smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Removing the conflicting background style */
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
@@ -144,4 +149,12 @@ a {
   a:not([class]) {
     @apply text-blue-600 hover:text-blue-800;
   }
+}
+
+/* Resource section background pattern */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
 }

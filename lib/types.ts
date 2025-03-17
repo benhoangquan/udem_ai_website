@@ -172,4 +172,34 @@ export interface SanityActivity extends SanityDocument {
   resources?: SanityResource[];
   status?: 'planned' | 'open' | 'full' | 'in_progress' | 'completed' | 'cancelled';
   tags?: string[];
+}
+
+export interface SanityResourceCategory {
+  name: string;
+  _type: string;
+}
+
+export interface SanityResourceContent {
+  type: 'document' | 'video' | 'code' | 'link' | 'file';
+  title: string;
+  description?: string;
+  url: string;
+  file?: {
+    asset: SanityReference;
+  };
+}
+
+export interface SanityResource extends SanityDocument {
+  title: string;
+  slug: SanitySlug;
+  category: SanityResourceCategory;
+  description?: any; // Portable Text
+  content?: SanityResourceContent[];
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  tags?: string[];
+  contributors?: SanityReference[] | any[];
+  relatedResources?: SanityReference[] | SanityResource[];
+  publishedAt?: string;
+  updatedAt?: string;
+  featured?: boolean;
 } 

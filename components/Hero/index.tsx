@@ -150,7 +150,7 @@ export const Hero = ({ generalInfo}: HeroProps) => {
           )}
           
           {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="absolute inset-0 bg-black/30"></div>
         </div>
         
         {/* Text Content Overlay */}
@@ -161,10 +161,10 @@ export const Hero = ({ generalInfo}: HeroProps) => {
                 {generalInfo?.title || "UdemAI"}
               </h1>
               <h2 className="text-xl md:text-2xl mb-6 text-blue-100">
-                Where Students Innovate with AI at University of Montreal
+                Where We Build Something Cool With AI 
               </h2>
               <p className="mb-8 text-white/90">
-                Join our community of AI enthusiasts, researchers, and innovators. We explore cutting-edge AI technologies 
+                Join our community of AI builders, researchers, and innovators. We explore cutting-edge AI technologies 
                 through hands-on projects, workshops, and collaborative learning.
               </p>
               <Button variant="default" size="lg" asChild className="rounded-full">

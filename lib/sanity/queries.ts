@@ -1,5 +1,5 @@
 import { sanityClient } from './client';
-import { SanityPost, SanityActivity } from '../types';
+import { SanityPost, SanityActivity, SanityResource } from '../types';
 
 /**
  * Get all blog posts
@@ -190,6 +190,98 @@ export async function getActivityBySlug(slug: string): Promise<SanityActivity | 
       resources,
       status,
       tags
+    }`,
+    { slug }
+  );
+}
+
+/**
+ * Get all resources or with limit
+ * @param limit Optional limit for the number of resources to return
+ * @returns Promise with array of resources
+ */
+export async function getAllResources(limit?: number): Promise<SanityResource[]> {
+  const limitQuery = limit ? `[0...${limit}]` : '';
+  return sanityClient.fetch(
+    `*[_type == "resource"] | order(publishedAt desc) ${limitQuery} {
+      _id,
+      _type,
+      title,
+      slug,
+      category->{name, _type},
+      description,
+      content,
+      difficulty,
+      tags,
+      "contributors": contributors[]->{_id, _type, name, image},
+      "relatedResources": relatedResources[]->{
+        _id,
+        _type,
+        title,
+        slug,
+        category->{name, _type},
+        difficulty
+      },
+      publishedAt,
+      updatedAt,
+      featured
+    }`
+  );
+}
+
+/**
+ * Get featured resources
+ * @param limit Optional limit for the number of resources to return
+ * @returns Promise with array of featured resources
+ */
+export async function getFeaturedResources(limit = 6): Promise<SanityResource[]> {
+  return sanityClient.fetch(
+    `*[_type == "resource" && featured == true] | order(publishedAt desc) [0...${limit}] {
+      _id,
+      _type,
+      title,
+      slug,
+      category->{name, _type},
+      description,
+      difficulty,
+      tags,
+      "contributors": contributors[]->{_id, _type, name, image},
+      publishedAt,
+      updatedAt,
+      featured
+    }`
+  );
+}
+
+/**
+ * Get a resource by slug
+ * @param slug The resource slug
+ * @returns Promise with a single resource or null
+ */
+export async function getResourceBySlug(slug: string): Promise<SanityResource | null> {
+  return sanityClient.fetch(
+    `*[_type == "resource" && slug.current == $slug][0]{
+      _id,
+      _type,
+      title,
+      slug,
+      category->{name, _type},
+      description,
+      content,
+      difficulty,
+      tags,
+      "contributors": contributors[]->{_id, _type, name, image},
+      "relatedResources": relatedResources[]->{
+        _id,
+        _type,
+        title,
+        slug,
+        category->{name, _type},
+        difficulty
+      },
+      publishedAt,
+      updatedAt,
+      featured
     }`,
     { slug }
   );

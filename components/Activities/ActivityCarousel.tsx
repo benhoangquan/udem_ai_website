@@ -171,91 +171,91 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
             onTouchMove={handleTouchMove}
             onTouchEnd={handleMouseUp}
           >
-            {activities.map((activity, index) => (
+              {activities.map((activity, index) => (
               <div 
-                key={activity._id} 
-                className={`h-full min-w-full md:min-w-[50%] lg:min-w-[40%] xl:min-w-[40%] pr-4 snap-start flex-shrink-0`}
-              >
+                  key={activity._id} 
+                className={`h-full min-w-full md:min-w-[40%] lg:min-w-[40%] xl:min-w-[40%] pr-4 snap-start flex-shrink-0`}
+                >
                 <div className="h-full max-h-[70vh] rounded-3xl overflow-hidden relative group">
-                  {/* Activity Image */}
-                  {activity.mainImage ? (
-                    <Image 
-                      src={urlForImage(activity.mainImage).url()}
-                      alt={activity.title}
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className={`h-full w-full bg-blue-${400 + (index % 3) * 100} flex items-center justify-center`}>
+                    {/* Activity Image */}
+                    {activity.mainImage ? (
+                      <Image 
+                        src={urlForImage(activity.mainImage).url()}
+                        alt={activity.title}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className={`h-full w-full bg-blue-${400 + (index % 3) * 100} flex items-center justify-center`}>
                       {/* <span className="text-4xl font-bold text-white">{activity.type.replace('_', ' ')}</span> */}
-                    </div>
-                  )}
-                  
-                  {/* Dark gradient overlay for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
-                  
-                  {/* Activity content overlay */}
-                  <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
-                    <div className="max-w-xl">
-                      {/* Activity Type Badge */}
-                      <span className="inline-block px-3 py-1 mb-4 text-sm font-medium bg-blue-600 text-white rounded-full">
-                        {activity.type.replace('_', ' ').toUpperCase()}
-                      </span>
-                      
-                      {/* Title */}
-                      <h3 className="text-3xl md:text-4xl font-bold mb-3 text-white">
-                        {activity.title}
-                      </h3>
-                      
-                      {/* Description */}
-                      {activity.description && (
-                        <div className="mb-6 text-white/90 line-clamp-3">
-                          <PortableText value={activity.description} />
-                        </div>
-                      )}
-                      
-                      {/* Activity details */}
-                      <div className="mb-6 space-y-2">
-                        {activity.schedule?.startDateTime && (
-                          <div className="flex items-center text-white/90">
-                            <Calendar size={18} className="mr-2" />
-                            <span>{formatDate(activity.schedule.startDateTime)}</span>
-                            {activity.schedule.startDateTime && (
-                              <span className="ml-2">
-                                <Clock size={18} className="inline mr-1" />
-                                {formatTime(activity.schedule.startDateTime)}
-                              </span>
-                            )}
+                      </div>
+                    )}
+                    
+                    {/* Dark gradient overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
+                    
+                    {/* Activity content overlay */}
+                    <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
+                      <div className="max-w-xl">
+                        {/* Activity Type Badge */}
+                        <span className="inline-block px-3 py-1 mb-4 text-sm font-medium bg-blue-600 text-white rounded-full">
+                          {activity.type.replace('_', ' ').toUpperCase()}
+                        </span>
+                        
+                        {/* Title */}
+                        <h3 className="text-3xl md:text-4xl font-bold mb-3 text-white">
+                          {activity.title}
+                        </h3>
+                        
+                        {/* Description */}
+                        {activity.description && (
+                          <div className="mb-6 text-white/90 line-clamp-3">
+                            <PortableText value={activity.description} />
                           </div>
                         )}
                         
-                        <div className="flex items-center text-white/90">
-                          <MapPin size={18} className="mr-2" />
-                          <span>{getLocationDisplay(activity)}</span>
+                        {/* Activity details */}
+                        <div className="mb-6 space-y-2">
+                          {activity.schedule?.startDateTime && (
+                            <div className="flex items-center text-white/90">
+                              <Calendar size={18} className="mr-2" />
+                              <span>{formatDate(activity.schedule.startDateTime)}</span>
+                              {activity.schedule.startDateTime && (
+                                <span className="ml-2">
+                                  <Clock size={18} className="inline mr-1" />
+                                  {formatTime(activity.schedule.startDateTime)}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                          
+                          <div className="flex items-center text-white/90">
+                            <MapPin size={18} className="mr-2" />
+                            <span>{getLocationDisplay(activity)}</span>
+                          </div>
                         </div>
+                        
+                        {/* View details button */}
+                        {activity.slug && (
+                          <Link 
+                            href={`/activities/${activity.slug.current}`} 
+                            className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-colors"
+                          >
+                            View Details
+                          </Link>
+                        )}
                       </div>
-                      
-                      {/* View details button */}
-                      {activity.slug && (
-                        <Link 
-                          href={`/activities/${activity.slug.current}`} 
-                          className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-colors"
-                        >
-                          View Details
-                        </Link>
-                      )}
                     </div>
                   </div>
-                </div>
               </div>
-            ))}
+              ))}
           </div>
-          
+            
           {/* Navigation arrows */}
-          <div className="absolute bottom-8 right-8 z-20 flex space-x-3">
+            <div className="absolute bottom-8 right-8 z-20 flex space-x-3">
             <button 
               onClick={goToPrev}
-              className={`p-3 rounded-full bg-grey/20 backdrop-blur-sm text-grey hover:bg-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors ${activeIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`p-3 rounded-full bg-gray-200 backdrop-blur-sm text-grey hover:bg-gray-400 focus:outline-none focus:ring-2 hover:ring-blue-500 hover:ring-offset-2 transition-colors ${activeIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
               disabled={activeIndex === 0}
               aria-label="Previous activity"
             >
@@ -264,19 +264,19 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
             
             <button 
               onClick={goToNext}
-              className={`p-3 rounded-full bg-grey/20 backdrop-blur-sm text-grey hover:bg-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors ${activeIndex === activities.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`p-3 rounded-full bg-gray-200 backdrop-blur-sm text-grey hover:bg-gray-400 focus:outline-none focus:ring-2 hover:ring-blue-500 hover:ring-offset-2 transition-colors ${activeIndex === activities.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
               disabled={activeIndex === activities.length - 1}
               aria-label="Next activity"
             >
               <ChevronRight size={24} />
             </button>
-          </div>
-          
-          {/* Dots indicator */}
-          <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
-            {activities.map((_, index) => (
-              <button
-                key={index}
+            </div>
+            
+            {/* Dots indicator */}
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+              {activities.map((_, index) => (
+                <button
+                  key={index}
                 onClick={() => {
                   setActiveIndex(index);
                   if (carouselRef.current) {
@@ -285,11 +285,11 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
                   }
                 }}
                 className={`w-3 h-3 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors ${index === activeIndex ? 'bg-blue-600' : 'bg-blue-300'}`}
-                aria-label={`Go to activity ${index + 1}`}
+                  aria-label={`Go to activity ${index + 1}`}
                 aria-current={index === activeIndex}
-              />
-            ))}
-          </div>
+                />
+              ))}
+            </div>
         </div>
       </div>
     </section>
