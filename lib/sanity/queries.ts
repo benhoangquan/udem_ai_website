@@ -2,8 +2,8 @@ import { sanityClient } from './client';
 import { SanityPost, SanityActivity, SanityResource } from '../types';
 
 /**
- * Get all blog posts
- * @returns Promise with array of posts
+ * Get all blog BlogPosts
+ * @returns Promise with array of BlogPosts
  */
 export async function getAllPosts(): Promise<SanityPost[]> {
   return sanityClient.fetch(
@@ -55,9 +55,9 @@ export async function getPostBySlug(slug: string): Promise<SanityPost | null> {
 }
 
 /**
- * Get featured posts
- * @param limit Number of posts to return
- * @returns Promise with array of featured posts
+ * Get featured BlogPosts
+ * @param limit Number of BlogPosts to return
+ * @returns Promise with array of featured BlogPosts
  */
 export async function getFeaturedPosts(limit = 3): Promise<SanityPost[]> {
   return sanityClient.fetch(
@@ -76,10 +76,10 @@ export async function getFeaturedPosts(limit = 3): Promise<SanityPost[]> {
 }
 
 /**
- * Get posts by category
+ * Get BlogPosts by category
  * @param category Category to filter by
- * @param limit Number of posts to return
- * @returns Promise with array of posts in the category
+ * @param limit Number of BlogPosts to return
+ * @returns Promise with array of BlogPosts in the category
  */
 export async function getPostsByCategory(category: string, limit = 10): Promise<SanityPost[]> {
   return sanityClient.fetch(

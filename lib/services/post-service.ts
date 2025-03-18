@@ -2,7 +2,7 @@ import { SanityPost } from '@/lib/types';
 import * as queries from '@/lib/sanity/queries';
 
 /**
- * Get all blog posts from Sanity
+ * Get all blog BlogPosts from Sanity
  */
 export async function getSanityPosts(): Promise<SanityPost[]> {
   return queries.getAllPosts();
@@ -17,17 +17,17 @@ export async function getSanityPostBySlug(slug: string): Promise<SanityPost | nu
 }
 
 /**
- * Get featured posts
- * @param limit Number of posts to return (default 3)
+ * Get featured BlogPosts
+ * @param limit Number of BlogPosts to return (default 3)
  */
 export async function getSanityFeaturedPosts(limit = 3): Promise<SanityPost[]> {
   return queries.getFeaturedPosts(limit);
 }
 
 /**
- * Get posts by category
+ * Get BlogPosts by category
  * @param category Category name
- * @param limit Number of posts to return (default 10)
+ * @param limit Number of BlogPosts to return (default 10)
  */
 export async function getSanityPostsByCategory(category: string, limit = 10): Promise<SanityPost[]> {
   return queries.getPostsByCategory(category, limit);

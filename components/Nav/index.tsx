@@ -65,7 +65,7 @@ export const Nav = () => {
             </Link>
 
             <Link 
-              href={isHomePage ? "/#activities" : "/activities"} 
+              href={isHomePage ? "/#activities" : "/#activities"} 
               scroll={isHomePage}
               className="block px-3 py-1.5 text-blue-800 hover:bg-blue-50 rounded-lg"
             >

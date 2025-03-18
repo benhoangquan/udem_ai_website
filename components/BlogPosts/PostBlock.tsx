@@ -3,7 +3,6 @@ import Image from "next/image";
 import { PostBlockProps } from "@/lib/types";
 import { getSanityImageUrl } from "@/lib/utils/image-helpers";
 import { getBlogPostUrl } from "@/lib/utils/url-helpers";
-import defaultImage from "@/assets/images/default.jpg";
 
 export const PostBlock = ({ post }: PostBlockProps) => {
     return (

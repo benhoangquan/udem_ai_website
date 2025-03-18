@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { SanityResource } from '@/lib/types';
-import { urlForImage } from '@/lib/sanity.image';
 import { Book, Video, Code, FileText, Link as LinkIcon } from 'lucide-react';
+import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from '@/components/ui/card';
 
 interface ResourceCardProps {
   resource: SanityResource;
@@ -45,33 +44,32 @@ const ResourceCard = ({ resource }: ResourceCardProps) => {
   };
 
   return (
-    <Link href={`/resources/${resource.slug.current}`} className="block">
-      <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden h-full flex flex-col">
-        <div className="p-6 flex flex-grow">
-          <div className="flex-shrink-0 mr-4 bg-gray-50 p-3 rounded-md">
+    <Link href={`/resources/${resource.slug.current}`} className="block h-full">
+      <Card className="hover:shadow-lg transition-shadow overflow-hidden h-full flex flex-col">
+        <CardHeader className="flex flex-row items-start gap-4 p-6 pb-4">
+          <div className="flex-shrink-0 bg-gray-50 p-3 rounded-md">
             {getIconForResource()}
           </div>
-          <div className="flex-grow">
-            <div className="flex items-start justify-between mb-2">
-              <h3 className="text-xl font-semibold text-gray-900 line-clamp-2">
-                {resource.title}
-              </h3>
-            </div>
+          <div className="flex-grow space-y-2">
+            <CardTitle className="text-xl line-clamp-2">
+              {resource.title}
+            </CardTitle>
             {resource.category && (
-              <span className="text-sm text-gray-600 mb-2 block">
+              <CardDescription className="text-sm text-gray-600">
                 {resource.category.name}
-              </span>
+              </CardDescription>
             )}
             {resource.difficulty && (
-              <span className={`inline-block px-2 py-1 text-xs rounded-full ${getDifficultyColor()} mt-2`}>
+              <span className={`inline-block px-2 py-1 text-xs rounded-full ${getDifficultyColor()}`}>
                 {resource.difficulty.charAt(0).toUpperCase() + resource.difficulty.slice(1)}
               </span>
             )}
           </div>
-        </div>
-        <div className="px-6 pb-4 mt-auto">
-          {resource.tags && resource.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-2">
+        </CardHeader>
+        
+        {resource.tags && resource.tags.length > 0 && (
+          <CardFooter className="px-6 pb-4 pt-0 mt-auto">
+            <div className="flex flex-wrap gap-2">
               {resource.tags.slice(0, 3).map((tag, index) => (
                 <span key={index} className="inline-block bg-gray-100 px-2 py-1 text-xs text-gray-700 rounded">
                   {tag}
@@ -83,9 +81,9 @@ const ResourceCard = ({ resource }: ResourceCardProps) => {
                 </span>
               )}
             </div>
-          )}
-        </div>
-      </div>
+          </CardFooter>
+        )}
+      </Card>
     </Link>
   );
 };

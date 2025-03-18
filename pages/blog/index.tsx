@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { SanityPost } from "@/lib/types";
-import { PostBlock } from "@/components/posts";
+import { PostBlock } from "@/components/BlogPosts/PostBlock";
 import { getSanityPosts, formatPostForDisplay } from "@/lib/services/post-service";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
