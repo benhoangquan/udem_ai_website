@@ -29,7 +29,7 @@ export const Nav = () => {
 
   // Apply conditional styles based on scroll position
   const navClasses = `fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[95%] md:w-[90%] lg:w-4/5 xl:w-3/4 
-    ${scrollPosition > 50 ? 'bg-white/95 backdrop-blur-sm shadow-lg' : 'bg-white/90'} 
+    ${scrollPosition > 50 ? 'bg-white/95 backdrop-blur-sm shadow-lg opacity-50' : 'bg-white/90'} 
     rounded-2xl transition-all duration-300`;
 
   return (
@@ -55,6 +55,15 @@ export const Nav = () => {
             <Link href="/" className="block px-3 py-1.5 text-blue-800 hover:bg-blue-50 rounded-lg">
               Home
             </Link>
+
+            {/* Blog */}
+            <Link 
+              href="/blog"
+              className="block px-3 py-1.5 text-blue-800 hover:bg-blue-50 rounded-lg"
+            >
+              Blog
+            </Link>
+
             <Link 
               href={isHomePage ? "/#activities" : "/activities"} 
               scroll={isHomePage}
@@ -71,6 +80,7 @@ export const Nav = () => {
             >
               Resources
             </Link>
+
 
             <Link 
               href={isHomePage ? "/#opportunities" : "/opportunities"} 
@@ -101,6 +111,14 @@ export const Nav = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
+              </Link>
+
+              <Link 
+                href="/blog"
+                className="block py-1.5 px-3 text-blue-800 hover:bg-blue-50 rounded-lg"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
               </Link>
               
               <Link 
