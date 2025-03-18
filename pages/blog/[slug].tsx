@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { PostDetail } from '@/components/posts/PostDetail';
+import { PostDetail } from '@/components/BlogPosts/PostDetail';
 import { BlogController } from '@/lib/controllers/blog-controller';
 import { SanityPost } from '@/lib/types';
 

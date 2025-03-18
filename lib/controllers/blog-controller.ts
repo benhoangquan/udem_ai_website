@@ -30,7 +30,7 @@ export class BlogController {
   }
   
   /**
-   * Get all blog posts for paths generation
+   * Get all blog BlogPosts for paths generation
    */
   static async getAllPostSlugs(): Promise<{ slug: string }[]> {
     const posts = await getSanityPosts();

@@ -6,6 +6,9 @@ import { PortableText } from '@portabletext/react';
 import { urlForImage } from '@/lib/sanity.image';
 import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin } from 'lucide-react';
 import { format } from 'date-fns';
+import { Card, CardContent, CardFooter, CardHeader, CardDescription, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface ActivityCarouselProps {
   activities: SanityActivity[];
@@ -136,12 +139,12 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
   if (!activities || activities.length === 0) {
     return (
       <section className="h-screen bg-white flex flex-col items-center justify-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-blue-900">
+        <CardTitle className="text-3xl md:text-4xl font-bold mb-8 text-blue-900">
           {title}
-        </h2>
-        <p className="text-xl text-blue-700">
+        </CardTitle>
+        <CardDescription className="text-xl text-blue-700">
           We're working on adding new activities. Check back soon!
-        </p>
+        </CardDescription>
       </section>
     );
   }
@@ -153,9 +156,9 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
       <div className="container mx-auto px-4 pt-16 h-full flex flex-col">
         {/* Title area */}
         <div className="mb-8">
-          <h2 className="text-3xl md:text-5xl font-bold text-blue-900">
+          <CardTitle className="text-3xl md:text-5xl font-bold text-blue-900">
             {title}
-          </h2>
+          </CardTitle>
         </div>
         
         {/* Activities carousel */}
@@ -171,112 +174,128 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
             onTouchMove={handleTouchMove}
             onTouchEnd={handleMouseUp}
           >
-              {activities.map((activity, index) => (
+            {activities.map((activity, index) => (
               <div 
-                  key={activity._id} 
+                key={activity._id} 
                 className={`h-full min-w-full md:min-w-[40%] lg:min-w-[40%] xl:min-w-[40%] pr-4 snap-start flex-shrink-0`}
-                >
-                <div className="h-full max-h-[70vh] rounded-3xl overflow-hidden relative group">
-                    {/* Activity Image */}
-                    {activity.mainImage ? (
+              >
+                <Card className="h-full max-h-[70vh] rounded-3xl overflow-hidden relative group border-0 shadow-none">
+                  {/* Activity Image */}
+                  {activity.mainImage ? (
+                    <div className="absolute inset-0">
                       <Image 
                         src={urlForImage(activity.mainImage).url()}
                         alt={activity.title}
                         fill
                         className="object-cover"
                       />
-                    ) : (
-                      <div className={`h-full w-full bg-blue-${400 + (index % 3) * 100} flex items-center justify-center`}>
+                    </div>
+                  ) : (
+                    <div className={`absolute inset-0 bg-blue-${400 + (index % 3) * 100} flex items-center justify-center`}>
                       {/* <span className="text-4xl font-bold text-white">{activity.type.replace('_', ' ')}</span> */}
-                      </div>
-                    )}
-                    
-                    {/* Dark gradient overlay for text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
-                    
-                    {/* Activity content overlay */}
-                    <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
-                      <div className="max-w-xl">
-                        {/* Activity Type Badge */}
-                        <span className="inline-block px-3 py-1 mb-4 text-sm font-medium bg-blue-600 text-white rounded-full">
-                          {activity.type.replace('_', ' ').toUpperCase()}
-                        </span>
-                        
-                        {/* Title */}
-                        <h3 className="text-3xl md:text-4xl font-bold mb-3 text-white">
-                          {activity.title}
-                        </h3>
-                        
-                        {/* Description */}
-                        {activity.description && (
-                          <div className="mb-6 text-white/90 line-clamp-3">
-                            <PortableText value={activity.description} />
+                    </div>
+                  )}
+                  
+                  {/* Dark gradient overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
+                  
+                  {/* Activity content overlay */}
+                  <CardContent className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
+                    <div className="max-w-xl">
+                      {/* Activity Type Badge */}
+                      <span className="inline-block px-3 py-1 mb-4 text-sm font-medium bg-blue-600 text-white rounded-full">
+                        {activity.type.replace('_', ' ').toUpperCase()}
+                      </span>
+                      
+                      {/* Title */}
+                      <CardTitle className="text-3xl md:text-4xl font-bold mb-3 text-white">
+                        {activity.title}
+                      </CardTitle>
+                      
+                      {/* Description */}
+                      {activity.description && (
+                        <CardDescription className="mb-6 text-white/90 line-clamp-3">
+                          <PortableText value={activity.description} />
+                        </CardDescription>
+                      )}
+                      
+                      {/* Activity details */}
+                      <div className="mb-6 space-y-2">
+                        {activity.schedule?.startDateTime && (
+                          <div className="flex items-center text-white/90">
+                            <Calendar size={18} className="mr-2" />
+                            <span>{formatDate(activity.schedule.startDateTime)}</span>
+                            {activity.schedule.startDateTime && (
+                              <span className="ml-2">
+                                <Clock size={18} className="inline mr-1" />
+                                {formatTime(activity.schedule.startDateTime)}
+                              </span>
+                            )}
                           </div>
                         )}
                         
-                        {/* Activity details */}
-                        <div className="mb-6 space-y-2">
-                          {activity.schedule?.startDateTime && (
-                            <div className="flex items-center text-white/90">
-                              <Calendar size={18} className="mr-2" />
-                              <span>{formatDate(activity.schedule.startDateTime)}</span>
-                              {activity.schedule.startDateTime && (
-                                <span className="ml-2">
-                                  <Clock size={18} className="inline mr-1" />
-                                  {formatTime(activity.schedule.startDateTime)}
-                                </span>
-                              )}
-                            </div>
-                          )}
-                          
-                          <div className="flex items-center text-white/90">
-                            <MapPin size={18} className="mr-2" />
-                            <span>{getLocationDisplay(activity)}</span>
-                          </div>
+                        <div className="flex items-center text-white/90">
+                          <MapPin size={18} className="mr-2" />
+                          <span>{getLocationDisplay(activity)}</span>
                         </div>
-                        
-                        {/* View details button */}
-                        {activity.slug && (
-                          <Link 
-                            href={`/activities/${activity.slug.current}`} 
-                            className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-colors"
-                          >
+                      </div>
+                      
+                      {/* View details button */}
+                      {activity.slug && (
+                        <Button 
+                          variant="blue" 
+                          size="lg" 
+                          className="rounded-full"
+                          asChild
+                        >
+                          <Link href={`/activities/${activity.slug.current}`}>
                             View Details
                           </Link>
-                        )}
-                      </div>
+                        </Button>
+                      )}
                     </div>
-                  </div>
+                  </CardContent>
+                </Card>
               </div>
-              ))}
+            ))}
           </div>
-            
+          
           {/* Navigation arrows */}
-            <div className="absolute bottom-8 right-8 z-20 flex space-x-3">
-            <button 
+          <div className="absolute bottom-8 right-8 z-20 flex space-x-3">
+            <Button 
               onClick={goToPrev}
-              className={`p-3 rounded-full bg-gray-200 backdrop-blur-sm text-grey hover:bg-gray-400 focus:outline-none focus:ring-2 hover:ring-blue-500 hover:ring-offset-2 transition-colors ${activeIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
               disabled={activeIndex === 0}
+              variant="secondary"
+              size="icon"
+              className={cn(
+                "rounded-full p-3 bg-gray-200 text-gray-800 hover:bg-gray-300",
+                activeIndex === 0 && "opacity-50 cursor-not-allowed"
+              )}
               aria-label="Previous activity"
             >
               <ChevronLeft size={24} />
-            </button>
+            </Button>
             
-            <button 
+            <Button 
               onClick={goToNext}
-              className={`p-3 rounded-full bg-gray-200 backdrop-blur-sm text-grey hover:bg-gray-400 focus:outline-none focus:ring-2 hover:ring-blue-500 hover:ring-offset-2 transition-colors ${activeIndex === activities.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
               disabled={activeIndex === activities.length - 1}
+              variant="secondary"
+              size="icon"
+              className={cn(
+                "rounded-full p-3 bg-gray-200 text-gray-800 hover:bg-gray-300",
+                activeIndex === activities.length - 1 && "opacity-50 cursor-not-allowed"
+              )}
               aria-label="Next activity"
             >
               <ChevronRight size={24} />
-            </button>
-            </div>
-            
-            {/* Dots indicator */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
-              {activities.map((_, index) => (
-                <button
-                  key={index}
+            </Button>
+          </div>
+          
+          {/* Dots indicator */}
+          <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+            {activities.map((_, index) => (
+              <Button
+                key={index}
                 onClick={() => {
                   setActiveIndex(index);
                   if (carouselRef.current) {
@@ -284,12 +303,17 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
                     carouselRef.current.scrollTo({ left: itemWidth * index, behavior: 'smooth' });
                   }
                 }}
-                className={`w-3 h-3 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors ${index === activeIndex ? 'bg-blue-600' : 'bg-blue-300'}`}
-                  aria-label={`Go to activity ${index + 1}`}
+                variant={index === activeIndex ? "blue" : "ghost"}
+                size="icon"
+                className={cn(
+                  "w-3 h-3 p-0 min-w-0 rounded-full",
+                  index === activeIndex ? "bg-blue-600" : "bg-blue-300"
+                )}
+                aria-label={`Go to activity ${index + 1}`}
                 aria-current={index === activeIndex}
-                />
-              ))}
-            </div>
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

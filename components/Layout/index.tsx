@@ -11,7 +11,6 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
     <div className="min-h-screen flex flex-col bg-blue-50/30">
       <Nav />
       <main className={`flex-grow ${!isHomePage ? "pt-20" : ""}`}>
-      {/* <main className={`flex-grow pt-20`}> */}
         {children}
       </main>
       <Footer />
