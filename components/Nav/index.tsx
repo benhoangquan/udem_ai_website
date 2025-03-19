@@ -28,6 +28,7 @@ export const Nav = () => {
   };
 
   // Apply conditional styles based on scroll position
+  // const navClasses = `fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[100%] 
   const navClasses = `fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[95%] md:w-[90%] lg:w-4/5 xl:w-3/4 
     ${scrollPosition > 50 ? 'bg-white/95 backdrop-blur-sm shadow-lg opacity-50' : 'bg-white/90'} 
     rounded-2xl transition-all duration-300`;
@@ -91,7 +92,7 @@ export const Nav = () => {
             </Link>
 
             <Link 
-              href="https://discord.com/invite/YOUR_DISCORD_INVITE" 
+              href="https://discord.com/invite/2Ttnw8p2Hy" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="px-3 py-1.5 text-blue-600 hover:bg-blue-50 font-semibold rounded-lg"
@@ -140,7 +141,7 @@ export const Nav = () => {
               </Link>
               
               <Link 
-                href="https://discord.com/invite/YOUR_DISCORD_INVITE" 
+                href="https://discord.com/invite/2Ttnw8p2Hy" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="block py-1.5 px-3 text-blue-600 hover:bg-blue-50 rounded-lg font-semibold"

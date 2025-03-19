@@ -202,4 +202,19 @@ export interface SanityResource extends SanityDocument {
   publishedAt?: string;
   updatedAt?: string;
   featured?: boolean;
+}
+
+// Member Types
+export interface SanityMember extends SanityDocument {
+  name: string;
+  slug?: SanitySlug;
+  email: string;
+  role: 'member' | 'executive' | 'alumni';
+  executivePosition?: string;
+  avatar?: SanityImage;
+  bio?: any; // Portable Text
+  skills?: string[];
+  socialLinks?: SanitySocialLinks;
+  joinDate: string;
+  status: 'active' | 'inactive' | 'suspended';
 } 

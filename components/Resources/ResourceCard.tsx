@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { SanityResource } from '@/lib/types';
-import { Book, Video, Code, FileText, Link as LinkIcon } from 'lucide-react';
+import { Book, Video, Code, FileText, Link as LinkIcon, ChevronRight } from 'lucide-react';
 import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from '@/components/ui/card';
 
 interface ResourceCardProps {
   resource: SanityResource;
 }
 
-const ResourceCard = ({ resource }: ResourceCardProps) => {
+export const ResourceCard = ({ resource }: ResourceCardProps) => {
   const getIconForResource = () => {
     // Get icon based on resource category or first content type
     if (resource.content && resource.content.length > 0) {
@@ -26,66 +26,73 @@ const ResourceCard = ({ resource }: ResourceCardProps) => {
           return <Book size={32} className="text-blue-600" />;
       }
     }
+    
+    // Default icon for resources without content
     return <Book size={32} className="text-blue-600" />;
   };
-
-  // Get difficulty badge color
+  
   const getDifficultyColor = () => {
     switch (resource.difficulty) {
       case 'beginner':
         return 'bg-green-100 text-green-800';
       case 'intermediate':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-yellow-100 text-yellow-800';
       case 'advanced':
-        return 'bg-purple-100 text-purple-800';
+        return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
   };
-
+  
   return (
-    <Link href={`/resources/${resource.slug.current}`} className="block h-full">
-      <Card className="hover:shadow-lg transition-shadow overflow-hidden h-full flex flex-col">
-        <CardHeader className="flex flex-row items-start gap-4 p-6 pb-4">
-          <div className="flex-shrink-0 bg-gray-50 p-3 rounded-md">
+    <Card className="h-full rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+      <CardHeader className={`relative p-4 ${resource.featured ? 'bg-blue-50' : ''}`}>
+        {resource.featured && (
+          <span className="absolute top-0 right-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-bl-lg">
+            Featured
+          </span>
+        )}
+        
+        <div className="flex items-start justify-between">
+          <div className="mb-2">
             {getIconForResource()}
           </div>
-          <div className="flex-grow space-y-2">
-            <CardTitle className="text-xl line-clamp-2">
-              {resource.title}
-            </CardTitle>
-            {resource.category && (
-              <CardDescription className="text-sm text-gray-600">
-                {resource.category.name}
-              </CardDescription>
-            )}
-            {resource.difficulty && (
-              <span className={`inline-block px-2 py-1 text-xs rounded-full ${getDifficultyColor()}`}>
-                {resource.difficulty.charAt(0).toUpperCase() + resource.difficulty.slice(1)}
-              </span>
-            )}
-          </div>
-        </CardHeader>
+          
+          {resource.difficulty && (
+            <span className={`text-xs font-medium rounded-full px-2 py-1 ${getDifficultyColor()}`}>
+              {resource.difficulty.charAt(0).toUpperCase() + resource.difficulty.slice(1)}
+            </span>
+          )}
+        </div>
         
-        {resource.tags && resource.tags.length > 0 && (
-          <CardFooter className="px-6 pb-4 pt-0 mt-auto">
-            <div className="flex flex-wrap gap-2">
-              {resource.tags.slice(0, 3).map((tag, index) => (
-                <span key={index} className="inline-block bg-gray-100 px-2 py-1 text-xs text-gray-700 rounded">
-                  {tag}
-                </span>
-              ))}
-              {resource.tags.length > 3 && (
-                <span className="inline-block bg-gray-100 px-2 py-1 text-xs text-gray-700 rounded">
-                  +{resource.tags.length - 3}
-                </span>
-              )}
-            </div>
-          </CardFooter>
+        <CardTitle className="text-xl font-bold text-gray-900 line-clamp-2">
+          {resource.title}
+        </CardTitle>
+      </CardHeader>
+      
+      <CardContent className="flex-grow p-4 pt-2">
+        {resource.description && (
+          <CardDescription className="text-sm text-gray-700 line-clamp-3">
+            {/* Using just the excerpt rather than full portable text for simplicity */}
+            {typeof resource.description === 'string' 
+              ? resource.description 
+              : 'Click to view this resource'}
+          </CardDescription>
         )}
-      </Card>
-    </Link>
+      </CardContent>
+      
+      <CardFooter className="p-4 pt-0">
+        <Link 
+          href={`/resources/${resource.slug.current}`}
+          className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors flex items-center"
+        >
+          View Resource
+          <ChevronRight size={16} className="ml-1" />
+        </Link>
+      </CardFooter>
+    </Card>
   );
 };
 
+// For backward compatibility
 export default ResourceCard; 

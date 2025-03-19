@@ -1,53 +1,23 @@
 import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { SanityActivity } from '@/lib/types';
-import { PortableText } from '@portabletext/react';
-import { urlForImage } from '@/lib/sanity.image';
-import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin } from 'lucide-react';
-import { format } from 'date-fns';
-import { Card, CardContent, CardFooter, CardHeader, CardDescription, CardTitle } from '@/components/ui/card';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { ActivityCard } from './ActivityCard';
 
 interface ActivityCarouselProps {
   activities: SanityActivity[];
   title?: string;
+  description?: string;
 }
 
-export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: ActivityCarouselProps) => {
+export const ActivityCarousel = ({ activities, title = "What Do We Do?", description }: ActivityCarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
-
-  // Format date function
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return 'TBA';
-    return format(new Date(dateString), 'MMM d, yyyy');
-  };
-
-  // Format time function
-  const formatTime = (dateString?: string) => {
-    if (!dateString) return '';
-    return format(new Date(dateString), 'h:mm a');
-  };
-
-  // Location display function
-  const getLocationDisplay = (activity: SanityActivity) => {
-    if (!activity.location) return 'Location TBA';
-    
-    if (activity.location.type === 'online') {
-      return 'Online';
-    } else if (activity.location.venue) {
-      return activity.location.venue;
-    } else if (activity.location.address) {
-      return activity.location.address;
-    }
-    
-    return 'Location TBA';
-  };
 
   // Navigation functions
   const goToPrev = () => {
@@ -143,7 +113,7 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
           {title}
         </CardTitle>
         <CardDescription className="text-xl text-blue-700">
-          We're working on adding new activities. Check back soon!
+          {description || "We're working on adding new activities. Check back soon!"}
         </CardDescription>
       </section>
     );
@@ -159,6 +129,11 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
           <CardTitle className="text-3xl md:text-5xl font-bold text-blue-900">
             {title}
           </CardTitle>
+          {description && (
+            <CardDescription className="text-xl mt-4 text-blue-700">
+              {description}
+            </CardDescription>
+          )}
         </div>
         
         {/* Activities carousel */}
@@ -179,83 +154,7 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?" }: Activ
                 key={activity._id} 
                 className={`h-full min-w-full md:min-w-[40%] lg:min-w-[40%] xl:min-w-[40%] pr-4 snap-start flex-shrink-0`}
               >
-                <Card className="h-full max-h-[70vh] rounded-3xl overflow-hidden relative group border-0 shadow-none">
-                  {/* Activity Image */}
-                  {activity.mainImage ? (
-                    <div className="absolute inset-0">
-                      <Image 
-                        src={urlForImage(activity.mainImage).url()}
-                        alt={activity.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className={`absolute inset-0 bg-blue-${400 + (index % 3) * 100} flex items-center justify-center`}>
-                      {/* <span className="text-4xl font-bold text-white">{activity.type.replace('_', ' ')}</span> */}
-                    </div>
-                  )}
-                  
-                  {/* Dark gradient overlay for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
-                  
-                  {/* Activity content overlay */}
-                  <CardContent className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
-                    <div className="max-w-xl">
-                      {/* Activity Type Badge */}
-                      <span className="inline-block px-3 py-1 mb-4 text-sm font-medium bg-blue-600 text-white rounded-full">
-                        {activity.type.replace('_', ' ').toUpperCase()}
-                      </span>
-                      
-                      {/* Title */}
-                      <CardTitle className="text-3xl md:text-4xl font-bold mb-3 text-white">
-                        {activity.title}
-                      </CardTitle>
-                      
-                      {/* Description */}
-                      {activity.description && (
-                        <CardDescription className="mb-6 text-white/90 line-clamp-3">
-                          <PortableText value={activity.description} />
-                        </CardDescription>
-                      )}
-                      
-                      {/* Activity details */}
-                      <div className="mb-6 space-y-2">
-                        {activity.schedule?.startDateTime && (
-                          <div className="flex items-center text-white/90">
-                            <Calendar size={18} className="mr-2" />
-                            <span>{formatDate(activity.schedule.startDateTime)}</span>
-                            {activity.schedule.startDateTime && (
-                              <span className="ml-2">
-                                <Clock size={18} className="inline mr-1" />
-                                {formatTime(activity.schedule.startDateTime)}
-                              </span>
-                            )}
-                          </div>
-                        )}
-                        
-                        <div className="flex items-center text-white/90">
-                          <MapPin size={18} className="mr-2" />
-                          <span>{getLocationDisplay(activity)}</span>
-                        </div>
-                      </div>
-                      
-                      {/* View details button */}
-                      {activity.slug && (
-                        <Button 
-                          variant="blue" 
-                          size="lg" 
-                          className="rounded-full"
-                          asChild
-                        >
-                          <Link href={`/activities/${activity.slug.current}`}>
-                            View Details
-                          </Link>
-                        </Button>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                <ActivityCard activity={activity} index={index} />
               </div>
             ))}
           </div>

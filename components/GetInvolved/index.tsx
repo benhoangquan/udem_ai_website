@@ -4,17 +4,25 @@ import { Card, CardContent, CardTitle, CardDescription, CardHeader, CardFooter }
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export const GetInvolved = () => {
+interface GetInvolvedProps {
+  title?: string;
+  description?: string;
+}
+
+export const GetInvolved = ({ 
+  title = "Get Involved", 
+  description = "Join our community of AI enthusiasts and make a difference. Whether you're looking to connect, lead, or collaborate, there's a place for you."
+}: GetInvolvedProps) => {
   return (
     <section id="opportunities" className="py-16 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center mb-12">
           <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
-            Get Involved
+            {title}
           </CardTitle>
           <div className="w-24 h-1 bg-blue-600 mb-8"></div>
           <CardDescription className="text-lg text-center max-w-3xl">
-            Join our community of AI enthusiasts and make a difference. Whether you're looking to connect, lead, or collaborate, there's a place for you.
+            {description}
           </CardDescription>
         </div>
         
@@ -49,51 +57,58 @@ export const GetInvolved = () => {
             </CardFooter>
           </Card>
           
-          {/* Card 2: Become a Member/Leader */}
-          <Card className="overflow-hidden flex flex-col h-full">
-            <CardHeader className="p-6 bg-purple-50 flex items-center justify-center">
-              <Users size={64} className="text-purple-600" />
+          {/* Card 2: Become a Member */}
+          <Card className="overflow-hidden flex flex-col h-full relative bg-gradient-to-br from-blue-50 to-white">
+            {/* Featured badge */}
+            <div className="absolute top-0 right-0 bg-blue-600 text-white py-1 px-3 text-sm font-medium z-10">
+              Featured
+            </div>
+            
+            <CardHeader className="p-6 flex items-center justify-center relative z-0">
+              <Users size={64} className="text-blue-600" />
             </CardHeader>
-            <CardContent className="p-6 flex-grow">
+            <CardContent className="p-6 flex-grow relative z-0">
               <CardTitle className="text-2xl font-semibold mb-3">
-                Become a Member/Leader
+                Become a Member
               </CardTitle>
               <CardDescription className="text-gray-600">
-                Take your involvement to the next level. Members get access to exclusive resources, while leaders can shape the direction of our community through organizing events and initiatives.
+                Join our official membership program to gain access to exclusive workshops, mentorship opportunities, networking events, and contribute to club initiatives.
               </CardDescription>
             </CardContent>
             <CardFooter className="p-6 pt-0">
               <Button 
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white" 
+                variant="blue" 
+                className="w-full" 
                 asChild
               >
-                <Link href="/opportunities/leadership">
+                <Link href="/join">
                   Apply Now
                 </Link>
               </Button>
             </CardFooter>
           </Card>
           
-          {/* Card 3: Collaborate */}
+          {/* Card 3: Partner With Us */}
           <Card className="overflow-hidden flex flex-col h-full">
-            <CardHeader className="p-6 bg-green-50 flex items-center justify-center">
-              <Handshake size={64} className="text-green-600" />
+            <CardHeader className="p-6 bg-blue-50 flex items-center justify-center">
+              <Handshake size={64} className="text-blue-600" />
             </CardHeader>
             <CardContent className="p-6 flex-grow">
               <CardTitle className="text-2xl font-semibold mb-3">
-                Collaborate
+                Partner With Us
               </CardTitle>
               <CardDescription className="text-gray-600">
-                Bring your ideas to life through collaboration. Work on research projects, organize workshops, contribute to open-source initiatives, or partner with other members on innovative solutions.
+                Collaborate with our organization for events, hackathons, research initiatives, or sponsorship opportunities. We're open to partnerships that advance AI education and innovation.
               </CardDescription>
             </CardContent>
             <CardFooter className="p-6 pt-0">
               <Button 
-                className="w-full bg-green-600 hover:bg-green-700 text-white" 
+                variant="blue" 
+                className="w-full" 
                 asChild
               >
-                <Link href="/opportunities/collaboration">
-                  Get Involved
+                <Link href="/contact">
+                  Get in Touch
                 </Link>
               </Button>
             </CardFooter>

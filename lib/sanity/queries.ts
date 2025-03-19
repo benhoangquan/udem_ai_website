@@ -1,5 +1,5 @@
 import { sanityClient } from './client';
-import { SanityPost, SanityActivity, SanityResource } from '../types';
+import { SanityPost, SanityActivity, SanityResource, SanityMember } from '../types';
 
 /**
  * Get all blog BlogPosts
@@ -284,5 +284,28 @@ export async function getResourceBySlug(slug: string): Promise<SanityResource | 
       featured
     }`,
     { slug }
+  );
+}
+
+/**
+ * Get all executive members
+ * @returns Promise with array of executive members
+ */
+export async function getAllExecutiveMembers(): Promise<SanityMember[]> {
+  return sanityClient.fetch(
+    `*[_type == "member" && role == "executive" && status == "active"] | order(joinDate desc) {
+      _id,
+      _type,
+      name,
+      slug,
+      email,
+      role,
+      executivePosition,
+      avatar,
+      bio,
+      skills,
+      socialLinks,
+      joinDate
+    }`
   );
 } 

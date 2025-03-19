@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { SanityResource } from '@/lib/types';
 import { ChevronRight, ChevronUp } from 'lucide-react';
-import ResourceCard from './ResourceCard';
+import { ResourceCard } from './ResourceCard';
 
 interface ResourceGridProps {
   resources: SanityResource[];
   title?: string;
+  description?: string;
 }
 
 export const ResourceGrid = ({ 
   resources,
-  title = "Our Resources"
+  title = "Our Resources",
+  description
 }: ResourceGridProps) => {
   const [visibleResources, setVisibleResources] = useState<SanityResource[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,55 +53,42 @@ export const ResourceGrid = ({
           <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
             {title}
           </h2>
-          <div className="w-24 h-1 bg-blue-600 mb-8"></div>
-          <p className="text-lg text-gray-600 text-center max-w-3xl">
-            Explore our curated collection of resources to help you learn and grow.
-          </p>
+          {description && (
+            <p className="text-xl text-center text-gray-600 max-w-3xl">
+              {description}
+            </p>
+          )}
         </div>
-
-        {resources.length > 0 ? (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {visibleResources.map((resource) => (
-                <ResourceCard key={resource._id} resource={resource} />
-              ))}
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {visibleResources.map(resource => (
+            <div key={resource._id} className="h-full">
+              <ResourceCard resource={resource} />
             </div>
-            
-            <div className="flex justify-center mt-12 space-x-4">
-              {visibleResources.length < resources.length && (
-                <button
-                  onClick={loadMore}
-                  className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg 
-                           transition-colors flex items-center space-x-2 shadow-md hover:shadow-lg"
-                >
-                  <span>View More</span>
-                  <ChevronRight size={18} />
-                </button>
-              )}
-              
-              {expanded && (
-                <button
-                  onClick={collapse}
-                  className="px-8 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg 
-                           transition-colors flex items-center space-x-2 shadow-md hover:shadow-lg"
-                >
-                  <span>Collapse</span>
-                  <ChevronUp size={18} />
-                </button>
-              )}
-            </div>
-            
-            {visibleResources.length > 0 && (
-              <div className="text-center mt-4 text-gray-500 text-sm">
-                Showing {visibleResources.length} of {resources.length} resources
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-500">No resources available yet.</p>
-          </div>
-        )}
+          ))}
+        </div>
+        
+        <div className="flex justify-center mt-10">
+          {!expanded && currentPage < totalPages && (
+            <button
+              onClick={loadMore}
+              className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full transition-colors shadow-md"
+            >
+              View More Resources
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </button>
+          )}
+          
+          {expanded && (
+            <button
+              onClick={collapse}
+              className="flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-full transition-colors"
+            >
+              Show Less
+              <ChevronUp className="ml-2 h-5 w-5" />
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );
