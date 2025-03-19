@@ -57,6 +57,14 @@ export const Nav = () => {
               Home
             </Link>
 
+            {/* About */}
+            <Link 
+              href="/about"
+              className="block px-3 py-1.5 text-blue-800 hover:bg-blue-50 rounded-lg"
+            >
+              About
+            </Link>
+
             {/* Blog */}
             <Link 
               href="/blog"
@@ -112,6 +120,15 @@ export const Nav = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
+              </Link>
+
+              {/* About (Mobile) */}
+              <Link 
+                href="/about"
+                className="block py-1.5 px-3 text-blue-800 hover:bg-blue-50 rounded-lg"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
               </Link>
 
               <Link 
