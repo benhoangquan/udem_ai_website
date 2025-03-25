@@ -5,6 +5,8 @@ import { SanityPost } from "@/lib/types";
 import { PostBlock } from "@/components/BlogPosts/PostBlock";
 import { getSanityPosts, formatPostForDisplay } from "@/lib/services/post-service";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Card, CardBar, CardDescription, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface BlogPageProps {
   posts: SanityPost[];
@@ -26,16 +28,24 @@ export default function BlogPage({ posts }: BlogPageProps) {
   const prevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-16">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24 pb-16">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex flex-col items-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
+          <CardTitle 
+            colorScheme="default"
+            size="lg"
+            className="text-4xl md:text-5xl font-bold text-center mb-6"
+          >
             Our Blog
-          </h1>
-          <div className="w-24 h-1 bg-blue-600 mb-8"></div>
-          <p className="text-lg text-gray-600 text-center max-w-3xl">
+          </CardTitle>
+          <CardBar colorScheme="primary" size="md" className="mb-8" />
+          <CardDescription 
+            colorScheme="muted"
+            size="md"
+            className="text-lg text-center max-w-3xl"
+          >
             Stay up to date with the latest news, tutorials, and insights from our community.
-          </p>
+          </CardDescription>
         </div>
 
         {posts.length > 0 ? (
@@ -47,55 +57,55 @@ export default function BlogPage({ posts }: BlogPageProps) {
             </div>
             
             {/* Pagination Controls */}
-            <div className="flex justify-center items-center space-x-2 mt-12">
-              <button
-                onClick={prevPage}
-                disabled={currentPage === 1}
-                className={`p-2 rounded-md ${
-                  currentPage === 1
-                    ? "text-gray-400 cursor-not-allowed"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`}
-                aria-label="Previous page"
-              >
-                <ChevronLeft size={20} />
-              </button>
-              
-              {/* Page Numbers */}
-              <div className="flex space-x-1">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                  <button
-                    key={number}
-                    onClick={() => paginate(number)}
-                    className={`px-3 py-1 rounded-md ${
-                      currentPage === number
-                        ? "bg-blue-600 text-white"
-                        : "text-gray-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    {number}
-                  </button>
-                ))}
-              </div>
-              
-              <button
-                onClick={nextPage}
-                disabled={currentPage === totalPages}
-                className={`p-2 rounded-md ${
-                  currentPage === totalPages
-                    ? "text-gray-400 cursor-not-allowed"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`}
-                aria-label="Next page"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
+            <Card variant="ghost" className="mt-12">
+              <CardContent className="flex justify-center items-center space-x-2">
+                <Button
+                  onClick={prevPage}
+                  disabled={currentPage === 1}
+                  variant="outline"
+                  size="icon"
+                  className={`${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft size={20} />
+                </Button>
+                
+                {/* Page Numbers */}
+                <div className="flex space-x-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                    <Button
+                      key={number}
+                      onClick={() => paginate(number)}
+                      variant={currentPage === number ? "default" : "outline"}
+                      size="sm"
+                      className={currentPage === number ? "bg-blue-600 text-white" : ""}
+                    >
+                      {number}
+                    </Button>
+                  ))}
+                </div>
+                
+                <Button
+                  onClick={nextPage}
+                  disabled={currentPage === totalPages}
+                  variant="outline"
+                  size="icon"
+                  className={`${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+                  aria-label="Next page"
+                >
+                  <ChevronRight size={20} />
+                </Button>
+              </CardContent>
+            </Card>
           </>
         ) : (
-          <div className="text-center py-16">
-            <p className="text-xl text-gray-500">No blog posts found.</p>
-          </div>
+          <Card variant="outline" className="text-center py-16">
+            <CardContent>
+              <CardDescription colorScheme="muted" size="md" className="text-xl">
+                No blog posts found.
+              </CardDescription>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

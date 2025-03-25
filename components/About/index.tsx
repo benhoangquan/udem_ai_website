@@ -9,7 +9,7 @@ interface AboutProps {
 
 export const About = ({ members, title = "Meet the Team", description }: AboutProps) => {
   return (
-    <div id="about">
+    <div id="about" className="min-h-screen">
       <TeamCarousel members={members} title={title} description={description} />
     </div>
   );

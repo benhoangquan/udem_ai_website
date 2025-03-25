@@ -12,13 +12,13 @@ const SocialLink = ({ href, icon, label }: { href: string; icon: IconType; label
     className="text-primary hover:text-secondary transition-colors"
     aria-label={label}
   >
-    {createElement(icon, { size: 24 })}
+    {createElement(icon as any, { size: 24 })}
   </Link>
 );
 
 export const Footer = () => {
   return (
-    <footer className="container mx-auto bg-primary/5 mt-8">
+    <footer className="container mx-auto bg-primary/5 mt-8 w-full">
       <div className="text-center border-t border-primary/10 py-8">
         <div className="flex items-center justify-center gap-6 mb-4">
           <SocialLink 

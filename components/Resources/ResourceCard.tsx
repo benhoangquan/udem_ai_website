@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { SanityResource } from '@/lib/types';
 import { Book, Video, Code, FileText, Link as LinkIcon, ChevronRight } from 'lucide-react';
-import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription, CardBar } from '@/components/ui/card';
 
 interface ResourceCardProps {
   resource: SanityResource;
@@ -44,15 +44,32 @@ export const ResourceCard = ({ resource }: ResourceCardProps) => {
     }
   };
   
+  const getResourceColorScheme = () => {
+    if (!resource.content || resource.content.length === 0) return 'primary';
+    
+    switch (resource.content[0].type) {
+      case 'document':
+        return 'primary';
+      case 'video':
+        return 'danger';
+      case 'code':
+        return 'accent';
+      case 'link':
+        return 'success';
+      case 'file':
+        return 'secondary';
+      default:
+        return 'primary';
+    }
+  };
+  
   return (
-    <Card className="h-full rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-      <CardHeader className={`relative p-4 ${resource.featured ? 'bg-blue-50' : ''}`}>
-        {resource.featured && (
-          <span className="absolute top-0 right-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-bl-lg">
-            Featured
-          </span>
-        )}
-        
+    <Card 
+      className="h-full rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden flex flex-col"
+      variant="default"
+      size="md"
+    >
+      <CardHeader className={`relative p-4`}>
         <div className="flex items-start justify-between">
           <div className="mb-2">
             {getIconForResource()}
@@ -65,14 +82,28 @@ export const ResourceCard = ({ resource }: ResourceCardProps) => {
           )}
         </div>
         
-        <CardTitle className="text-xl font-bold text-gray-900 line-clamp-2">
+        <CardTitle 
+          colorScheme="default" 
+          size="md" 
+          className="text-xl font-bold text-gray-900 line-clamp-2"
+        >
           {resource.title}
         </CardTitle>
+        
+        <CardBar 
+          colorScheme={getResourceColorScheme()} 
+          size="sm" 
+          className="mt-2"
+        />
       </CardHeader>
       
       <CardContent className="flex-grow p-4 pt-2">
         {resource.description && (
-          <CardDescription className="text-sm text-gray-700 line-clamp-3">
+          <CardDescription 
+            colorScheme="muted" 
+            size="sm"
+            className="text-sm text-gray-700 line-clamp-3"
+          >
             {/* Using just the excerpt rather than full portable text for simplicity */}
             {typeof resource.description === 'string' 
               ? resource.description 

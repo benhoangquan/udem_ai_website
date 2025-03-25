@@ -5,7 +5,7 @@ import { PortableText } from '@portabletext/react';
 import { urlForImage } from '@/lib/sanity.image';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 import { format } from 'date-fns';
-import { Card, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardTitle, CardDescription, CardBar } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 interface ActivityCardProps {
@@ -40,9 +40,28 @@ export const ActivityCard = ({ activity, index }: ActivityCardProps) => {
     
     return 'Location TBA';
   };
+  
+  // Get appropriate color for activity type
+  const getActivityColorScheme = () => {
+    switch (activity.type) {
+      case 'workshop':
+        return 'primary';
+      case 'hackathon':
+        return 'accent';
+      case 'study_group':
+        return 'success';
+      case 'social':
+        return 'warning';
+      default:
+        return 'primary';
+    }
+  };
 
   return (
-    <Card className="h-full max-h-[70vh] rounded-3xl overflow-hidden relative group border-0 shadow-none">
+    <Card 
+      className="h-full max-h-[70vh] rounded-3xl overflow-hidden relative group border-0 shadow-none"
+      variant="ghost"
+    >
       {/* Activity Image */}
       {activity.mainImage ? (
         <div className="absolute inset-0">
@@ -60,24 +79,27 @@ export const ActivityCard = ({ activity, index }: ActivityCardProps) => {
       )}
       
       {/* Dark gradient overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
+      {/* <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div> */}
       
       {/* Activity content overlay */}
       <CardContent className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
         <div className="max-w-xl">
-          {/* Activity Type Badge */}
-          <span className="inline-block px-3 py-1 mb-4 text-sm font-medium bg-blue-600 text-white rounded-full">
-            {activity.type.replace('_', ' ').toUpperCase()}
-          </span>
+          {/* Activity Type Badge with CardBar underneath */}
+          <div className="mb-4">
+            <span className="inline-block px-3 py-1 mb-2 text-sm font-medium bg-blue-600 text-white rounded-full">
+              {activity.type.replace('_', ' ').toUpperCase()}
+            </span>
+            <CardBar colorScheme={getActivityColorScheme()} size="sm" className="ml-1" />
+          </div>
           
           {/* Title */}
-          <CardTitle className="text-3xl md:text-4xl font-bold mb-3 text-white">
+          <CardTitle colorScheme="default" size="lg" className="text-3xl md:text-4xl font-bold mb-3 text-white">
             {activity.title}
           </CardTitle>
           
           {/* Description */}
           {activity.description && (
-            <CardDescription className="mb-6 text-white/90 line-clamp-3">
+            <CardDescription colorScheme="default" size="md" className="mb-6 text-white/90 line-clamp-3">
               <PortableText value={activity.description} />
             </CardDescription>
           )}
