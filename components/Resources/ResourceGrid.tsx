@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { SanityResource } from '@/lib/types';
 import { ChevronRight, ChevronUp } from 'lucide-react';
 import { ResourceCard } from './ResourceCard';
+import { CardDescription } from '../ui/card';
+import { CardTitle } from '../ui/card';
 
 interface ResourceGridProps {
   resources: SanityResource[];
@@ -50,13 +52,14 @@ export const ResourceGrid = ({
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col items-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
+          <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
             {title}
-          </h2>
+          </CardTitle>
+          <div className="w-24 h-1 bg-blue-600 mb-8"></div>
           {description && (
-            <p className="text-xl text-center text-gray-600 max-w-3xl">
+            <CardDescription className="text-lg text-center max-w-3xl">
               {description}
-            </p>
+            </CardDescription>
           )}
         </div>
         

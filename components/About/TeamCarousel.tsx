@@ -108,20 +108,23 @@ export const TeamCarousel = ({ members, title = "Meet the Team", description }: 
   // Fallback content if no members
   if (!members || members.length === 0) {
     return (
-      <section className="py-16 bg-white flex flex-col items-center justify-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-blue-900">
-          {title}
-        </h2>
-        <p className="text-xl text-blue-700">
+      <section className="flex flex-col items-center mb-12">
+      <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
+        {title || "Meet the Team"}
+      </CardTitle>
+      <div className="w-24 h-1 bg-blue-600 mb-8"></div>
+      {description && (
+        <CardDescription className="text-lg text-center max-w-3xl">
           {description || "Our team information is coming soon. Check back later!"}
-        </p>
-      </section>
+        </CardDescription>
+      )}
+    </section>
     );
   }
 
   return (
     <section className="py-16 relative bg-white overflow-hidden">
-      <div className="container mx-auto px-4 pt-4">
+      <div className="container mx-auto px-4 md:px-6">
         {/* Title area */}
         <div className="flex flex-col items-center mb-12">
           <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
@@ -163,7 +166,7 @@ export const TeamCarousel = ({ members, title = "Meet the Team", description }: 
             variant="default" 
             size="icon" 
             className={cn(
-              "absolute top-1/2 left-2 transform -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 shadow-md z-10",
+              "absolute top-1/2 left-2 transform -translate-y-1/2 rounded-full text-black bg-white/70 hover:bg-white/90 shadow-md z-10",
               { "opacity-50 cursor-not-allowed": activeIndex === 0 }
             )}
             onClick={goToPrev}
@@ -176,7 +179,7 @@ export const TeamCarousel = ({ members, title = "Meet the Team", description }: 
             variant="default" 
             size="icon" 
             className={cn(
-              "absolute top-1/2 right-2 transform -translate-y-1/2 rounded-full bg-white/70 hover:bg-white/90 shadow-md z-10",
+              "absolute top-1/2 right-2 transform -translate-y-1/2 rounded-full text-black bg-white/70 hover:bg-white/90 shadow-md z-10",
               { "opacity-50 cursor-not-allowed": activeIndex === members.length - 1 }
             )}
             onClick={goToNext}

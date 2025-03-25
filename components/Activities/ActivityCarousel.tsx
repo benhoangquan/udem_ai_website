@@ -108,11 +108,12 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
   // Fallback content if no activities
   if (!activities || activities.length === 0) {
     return (
-      <section className="h-screen bg-white flex flex-col items-center justify-center">
-        <CardTitle className="text-3xl md:text-4xl font-bold mb-8 text-blue-900">
+      <section className="h-screen flex flex-col items-center justify-center">
+        <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
           {title}
         </CardTitle>
-        <CardDescription className="text-xl text-blue-700">
+        <div className="w-24 h-1 mb-8"></div>
+        <CardDescription className="text-lg text-center max-w-3xl">
           {description || "We're working on adding new activities. Check back soon!"}
         </CardDescription>
       </section>
@@ -120,17 +121,18 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
   }
 
   return (
-    <section className="h-screen relative bg-white overflow-hidden">
-      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white to-transparent z-10"></div>
+    <section className="h-screen relative overflow-hidden">
+      {/* <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white to-transparent z-10"></div> */}
       
       <div className="container mx-auto px-4 pt-16 h-full flex flex-col">
         {/* Title area */}
-        <div className="mb-8">
-          <CardTitle className="text-3xl md:text-5xl font-bold text-blue-900">
+        <div className="flex flex-col items-center mb-12">
+          <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
             {title}
           </CardTitle>
+          <div className="w-24 h-1 mb-8"></div>
           {description && (
-            <CardDescription className="text-xl mt-4 text-blue-700">
+            <CardDescription className="text-lg text-center max-w-3xl">
               {description}
             </CardDescription>
           )}
@@ -190,7 +192,7 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
             </Button>
           </div>
           
-          {/* Dots indicator */}
+          {/* Dots indicator - moved outside the carousel */}
           <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
             {activities.map((_, index) => (
               <Button

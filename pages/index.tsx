@@ -23,11 +23,6 @@ export default function HomePage({ generalInfo, activities, resources, executive
                 title="What Do We Do?" 
                 description="Explore our activities and learn how we're building a community of AI enthusiasts." 
             />
-            <Resources 
-                resources={resources} 
-                title="Learning Resources" 
-                description="Explore our curated collection of resources to help you learn and grow." 
-            />
             <About 
                 members={executiveMembers} 
                 title="Meet the Team" 

@@ -100,7 +100,7 @@ export const Hero = ({ generalInfo}: HeroProps) => {
   return (
     <div className="overflow-hidden">
       {/* Hero Section with Gallery Background and Overlaid Text */}
-      <section className="relative h-screen overflow-hidden -mt-20">
+      <section className="relative h-screen overflow-hidden pt-16">
         {/* Gallery Background */}
         <div 
           ref={galleryRef}

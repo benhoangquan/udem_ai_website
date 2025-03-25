@@ -14,13 +14,13 @@ export const GetInvolved = ({
   description = "Join our community of AI enthusiasts and make a difference. Whether you're looking to connect, lead, or collaborate, there's a place for you."
 }: GetInvolvedProps) => {
   return (
-    <section id="opportunities" className="py-16 bg-gray-50">
+    <section id="opportunities" className="py-16">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center mb-12">
           <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
             {title}
           </CardTitle>
-          <div className="w-24 h-1 bg-blue-600 mb-8"></div>
+          <div className="w-24 h-1 mb-8"></div>
           <CardDescription className="text-lg text-center max-w-3xl">
             {description}
           </CardDescription>
@@ -29,7 +29,7 @@ export const GetInvolved = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1: Join Discord */}
           <Card className="overflow-hidden flex flex-col h-full">
-            <CardHeader className="p-6 bg-blue-50 flex items-center justify-center">
+            <CardHeader className="p-6 flex items-center justify-center">
               <MessageSquare size={64} className="text-blue-600" />
             </CardHeader>
             <CardContent className="p-6 flex-grow">
@@ -60,7 +60,7 @@ export const GetInvolved = ({
           {/* Card 2: Become a Member */}
           <Card className="overflow-hidden flex flex-col h-full relative bg-gradient-to-br from-blue-50 to-white">
             {/* Featured badge */}
-            <div className="absolute top-0 right-0 bg-blue-600 text-white py-1 px-3 text-sm font-medium z-10">
+            <div className="absolute top-0 right-0 text-white py-1 px-3 text-sm font-medium z-10">
               Featured
             </div>
             
@@ -90,7 +90,7 @@ export const GetInvolved = ({
           
           {/* Card 3: Partner With Us */}
           <Card className="overflow-hidden flex flex-col h-full">
-            <CardHeader className="p-6 bg-blue-50 flex items-center justify-center">
+            <CardHeader className="p-6 flex items-center justify-center">
               <Handshake size={64} className="text-blue-600" />
             </CardHeader>
             <CardContent className="p-6 flex-grow">
