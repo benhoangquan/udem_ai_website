@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { SanityActivity } from '@/lib/types';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardTitle, CardDescription, CardBar, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ActivityCard } from './ActivityCard';
@@ -109,13 +109,25 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
   if (!activities || activities.length === 0) {
     return (
       <section className="h-screen flex flex-col items-center justify-center">
-        <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
+        <CardTitle 
+          colorScheme="default"
+          size="lg"
+          className="text-4xl md:text-5xl font-bold text-center mb-6"
+        >
           {title}
         </CardTitle>
-        <div className="w-24 h-1 mb-8"></div>
-        <CardDescription className="text-lg text-center max-w-3xl">
-          {description || "We're working on adding new activities. Check back soon!"}
-        </CardDescription>
+        <CardBar colorScheme="primary" size="md" className="mb-8" />
+        <Card variant="outline" className="max-w-3xl mx-auto p-8 text-center">
+          <CardContent>
+            <CardDescription 
+              colorScheme="muted"
+              size="md"
+              className="text-lg"
+            >
+              {description || "We're working on adding new activities. Check back soon!"}
+            </CardDescription>
+          </CardContent>
+        </Card>
       </section>
     );
   }
@@ -127,12 +139,20 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
       <div className="container mx-auto px-4 pt-16 h-full flex flex-col">
         {/* Title area */}
         <div className="flex flex-col items-center mb-12">
-          <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
+          <CardTitle 
+            colorScheme="default"
+            size="lg"
+            className="text-4xl md:text-5xl font-bold text-center mb-6"
+          >
             {title}
           </CardTitle>
-          <div className="w-24 h-1 mb-8"></div>
+          <CardBar colorScheme="primary" size="md" className="mb-8" />
           {description && (
-            <CardDescription className="text-lg text-center max-w-3xl">
+            <CardDescription 
+              colorScheme="muted"
+              size="md"
+              className="text-lg text-center max-w-3xl"
+            >
               {description}
             </CardDescription>
           )}
@@ -154,7 +174,7 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
             {activities.map((activity, index) => (
               <div 
                 key={activity._id} 
-                className={`h-full min-w-full md:min-w-[40%] lg:min-w-[40%] xl:min-w-[40%] pr-4 snap-start flex-shrink-0`}
+                className={`h-[90%] min-w-full md:min-w-[40%] lg:min-w-[40%] xl:min-w-[40%] pr-4 snap-start flex-shrink-0`}
               >
                 <ActivityCard activity={activity} index={index} />
               </div>
@@ -162,14 +182,14 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
           </div>
           
           {/* Navigation arrows */}
-          <div className="absolute bottom-8 right-8 z-20 flex space-x-3">
+          <div className="absolute bottom-4 right-8 z-20 flex space-x-3">
             <Button 
               onClick={goToPrev}
               disabled={activeIndex === 0}
               variant="secondary"
               size="icon"
               className={cn(
-                "rounded-full p-3 bg-gray-200 text-gray-800 hover:bg-gray-300",
+                "rounded-full p-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-700",
                 activeIndex === 0 && "opacity-50 cursor-not-allowed"
               )}
               aria-label="Previous activity"
@@ -183,7 +203,7 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
               variant="secondary"
               size="icon"
               className={cn(
-                "rounded-full p-3 bg-gray-200 text-gray-800 hover:bg-gray-300",
+                "rounded-full p-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-700",
                 activeIndex === activities.length - 1 && "opacity-50 cursor-not-allowed"
               )}
               aria-label="Next activity"
@@ -193,7 +213,7 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
           </div>
           
           {/* Dots indicator - moved outside the carousel */}
-          <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+          <div className="absolute bottom-7 left-0 right-0 flex justify-center gap-2 z-10">
             {activities.map((_, index) => (
               <Button
                 key={index}
@@ -208,7 +228,7 @@ export const ActivityCarousel = ({ activities, title = "What Do We Do?", descrip
                 size="icon"
                 className={cn(
                   "w-3 h-3 p-0 min-w-0 rounded-full",
-                  index === activeIndex ? "bg-blue-600" : "bg-blue-300"
+                  index === activeIndex ? "bg-blue-600" : "bg-blue-300/80 backdrop-blur-sm"
                 )}
                 aria-label={`Go to activity ${index + 1}`}
                 aria-current={index === activeIndex}

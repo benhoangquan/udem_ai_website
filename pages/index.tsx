@@ -6,6 +6,8 @@ import { Activities } from "@/components/Activities";
 import { Resources } from "@/components/Resources";
 import { About } from "@/components/About";
 import { GetInvolved } from "@/components/GetInvolved";
+import { useState, useEffect } from "react";
+import { LoadingIndicator } from "@/components/ui/spinner";
 
 interface HomePageProps {
     generalInfo: SanityGeneralInfo;
@@ -15,6 +17,21 @@ interface HomePageProps {
 }
 
 export default function HomePage({ generalInfo, activities, resources, executiveMembers }: HomePageProps) {
+    const [isLoading, setIsLoading] = useState(true);
+    
+    useEffect(() => {
+        // Simulate content loading
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 300);
+        
+        return () => clearTimeout(timer);
+    }, []);
+    
+    if (isLoading) {
+        return <LoadingIndicator message="Loading UdemAI..." />;
+    }
+
     return (
         <>
             <Hero generalInfo={generalInfo} />
@@ -37,18 +54,33 @@ export default function HomePage({ generalInfo, activities, resources, executive
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const generalInfo = await getGeneralInfo();
-    const activities = await getAllActivities();
-    const resources = await getAllResources(); // Initial limit of 6 resources (2x3 grid)
-    const executiveMembers = await getAllExecutiveMembers();
+    try {
+        const generalInfo = await getGeneralInfo();
+        const activities = await getAllActivities();
+        const resources = await getAllResources();
+        const executiveMembers = await getAllExecutiveMembers();
 
-    return {
-        props: {
-            generalInfo,
-            activities,
-            resources,
-            executiveMembers,
-        },
-        revalidate: 3600,
-    };
+        return {
+            props: {
+                generalInfo,
+                activities,
+                resources,
+                executiveMembers,
+            },
+            revalidate: 3600, // Revalidate every hour
+        };
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        
+        // Return minimal props on error
+        return {
+            props: {
+                generalInfo: {},
+                activities: [],
+                resources: [],
+                executiveMembers: [],
+            },
+            revalidate: 60, // Try again more quickly on error
+        };
+    }
 };

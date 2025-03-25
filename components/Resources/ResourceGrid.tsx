@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { SanityResource } from '@/lib/types';
 import { ChevronRight, ChevronUp } from 'lucide-react';
 import { ResourceCard } from './ResourceCard';
-import { CardDescription } from '../ui/card';
-import { CardTitle } from '../ui/card';
+import { Card, CardBar, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface ResourceGridProps {
   resources: SanityResource[];
@@ -45,19 +45,22 @@ export const ResourceGrid = ({
 
   return (
     <section className="relative py-16 overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-blue-50 opacity-50" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-      </div>
-      
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col items-center mb-12">
-          <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
+          <CardTitle 
+            colorScheme="default"
+            size="lg"
+            className="text-4xl md:text-5xl font-bold text-center mb-6"
+          >
             {title}
           </CardTitle>
-          <div className="w-24 h-1 bg-blue-600 mb-8"></div>
+          <CardBar colorScheme="primary" size="md" className="mb-8" />
           {description && (
-            <CardDescription className="text-lg text-center max-w-3xl">
+            <CardDescription 
+              colorScheme="muted"
+              size="md"
+              className="text-lg text-center max-w-3xl"
+            >
               {description}
             </CardDescription>
           )}
@@ -71,25 +74,39 @@ export const ResourceGrid = ({
           ))}
         </div>
         
+        {visibleResources.length === 0 && (
+          <Card variant="outline" className="p-8 text-center">
+            <CardContent>
+              <CardDescription colorScheme="muted" size="md">
+                No resources available at this time. Check back soon!
+              </CardDescription>
+            </CardContent>
+          </Card>
+        )}
+        
         <div className="flex justify-center mt-10">
           {!expanded && currentPage < totalPages && (
-            <button
+            <Button
               onClick={loadMore}
-              className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full transition-colors shadow-md"
+              variant="default"
+              size="lg"
+              className="flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700"
             >
               View More Resources
               <ChevronRight className="ml-2 h-5 w-5" />
-            </button>
+            </Button>
           )}
           
           {expanded && (
-            <button
+            <Button
               onClick={collapse}
-              className="flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-full transition-colors"
+              variant="outline"
+              size="lg"
+              className="flex items-center justify-center rounded-full"
             >
               Show Less
               <ChevronUp className="ml-2 h-5 w-5" />
-            </button>
+            </Button>
           )}
         </div>
       </div>

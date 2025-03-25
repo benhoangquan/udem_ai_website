@@ -4,7 +4,7 @@ import { MemberCard } from './MemberCard';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardTitle, CardDescription, CardBar, CardContent } from '@/components/ui/card';
 
 interface TeamCarouselProps {
   members: SanityMember[];
@@ -109,30 +109,48 @@ export const TeamCarousel = ({ members, title = "Meet the Team", description }: 
   if (!members || members.length === 0) {
     return (
       <section className="flex flex-col items-center mb-12">
-      <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
-        {title || "Meet the Team"}
-      </CardTitle>
-      <div className="w-24 h-1 bg-blue-600 mb-8"></div>
-      {description && (
-        <CardDescription className="text-lg text-center max-w-3xl">
-          {description || "Our team information is coming soon. Check back later!"}
-        </CardDescription>
-      )}
-    </section>
+        <CardTitle 
+          colorScheme="default" 
+          size="lg"
+          className="text-4xl md:text-5xl font-bold text-center mb-6"
+        >
+          {title || "Meet the Team"}
+        </CardTitle>
+        <CardBar colorScheme="primary" size="md" className="mb-8" />
+        <Card variant="outline" className="max-w-3xl mx-auto p-8 text-center">
+          <CardContent>
+            <CardDescription 
+              colorScheme="muted"
+              size="md"
+              className="text-lg"
+            >
+              {description || "Our team information is coming soon. Check back later!"}
+            </CardDescription>
+          </CardContent>
+        </Card>
+      </section>
     );
   }
 
   return (
-    <section className="py-16 relative bg-white overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         {/* Title area */}
         <div className="flex flex-col items-center mb-12">
-          <CardTitle className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-6">
+          <CardTitle 
+            colorScheme="default"
+            size="lg"
+            className="text-4xl md:text-5xl font-bold text-center mb-6"
+          >
             {title}
           </CardTitle>
-          <div className="w-24 h-1 bg-blue-600 mb-8"></div>
+          <CardBar colorScheme="primary" size="md" className="mb-8" />
           {description && (
-            <CardDescription className="text-lg text-center max-w-3xl">
+            <CardDescription 
+              colorScheme="muted"
+              size="md"
+              className="text-lg text-center max-w-3xl"
+            >
               {description}
             </CardDescription>
           )}
@@ -163,11 +181,11 @@ export const TeamCarousel = ({ members, title = "Meet the Team", description }: 
           
           {/* Navigation controls */}
           <Button 
-            variant="default" 
+            variant="secondary" 
             size="icon" 
             className={cn(
-              "absolute top-1/2 left-2 transform -translate-y-1/2 rounded-full text-black bg-white/70 hover:bg-white/90 shadow-md z-10",
-              { "opacity-50 cursor-not-allowed": activeIndex === 0 }
+              "absolute top-1/2 left-2 transform -translate-y-1/2 rounded-full bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm hover:bg-white/90 dark:hover:bg-gray-800/90 shadow-md z-10",
+              activeIndex === 0 && "opacity-50 cursor-not-allowed"
             )}
             onClick={goToPrev}
             disabled={activeIndex === 0}
@@ -176,11 +194,11 @@ export const TeamCarousel = ({ members, title = "Meet the Team", description }: 
           </Button>
           
           <Button 
-            variant="default" 
+            variant="secondary" 
             size="icon" 
             className={cn(
-              "absolute top-1/2 right-2 transform -translate-y-1/2 rounded-full text-black bg-white/70 hover:bg-white/90 shadow-md z-10",
-              { "opacity-50 cursor-not-allowed": activeIndex === members.length - 1 }
+              "absolute top-1/2 right-2 transform -translate-y-1/2 rounded-full bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm hover:bg-white/90 dark:hover:bg-gray-800/90 shadow-md z-10",
+              activeIndex === members.length - 1 && "opacity-50 cursor-not-allowed"
             )}
             onClick={goToNext}
             disabled={activeIndex === members.length - 1}
@@ -192,11 +210,14 @@ export const TeamCarousel = ({ members, title = "Meet the Team", description }: 
         {/* Pagination dots */}
         <div className="flex justify-center mt-4 space-x-2">
           {members.map((_, index) => (
-            <button
+            <Button
               key={index}
-              className={`h-2 rounded-full transition-all ${
-                activeIndex === index ? 'w-6 bg-blue-600' : 'w-2 bg-blue-200'
-              }`}
+              variant={activeIndex === index ? "blue" : "ghost"}
+              size="icon"
+              className={cn(
+                "p-0 min-w-0",
+                activeIndex === index ? "h-2 w-6 rounded-full bg-blue-600" : "h-2 w-2 rounded-full bg-blue-200 dark:bg-blue-800"
+              )}
               onClick={() => {
                 if (carouselRef.current) {
                   const itemWidth = carouselRef.current.scrollWidth / members.length;
@@ -204,6 +225,8 @@ export const TeamCarousel = ({ members, title = "Meet the Team", description }: 
                   setActiveIndex(index);
                 }
               }}
+              aria-label={`Go to team member ${index + 1}`}
+              aria-current={index === activeIndex}
             />
           ))}
         </div>

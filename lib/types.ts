@@ -37,10 +37,30 @@ export interface SanityReference {
   _type: string;
 }
 
+// Portable Text block type definitions
+export type PortableTextBlock = {
+  _key: string;
+  _type: 'block';
+  children: {
+    _key: string;
+    _type: 'span';
+    marks: string[];
+    text: string;
+  }[];
+  markDefs: {
+    _key: string;
+    _type: string;
+    href?: string;
+  }[];
+  style: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote';
+};
+
+export type PortableTextContent = Array<PortableTextBlock | SanityImage>;
+
 export interface SanityAuthor extends SanityDocument {
   name: string;
   image?: SanityImage;
-  bio?: any; // Portable Text
+  bio?: PortableTextContent;
 }
 
 // Helper type guard function
@@ -60,7 +80,7 @@ export interface SanityPost extends SanityDocument {
   author?: SanityAuthor | SanityReference;
   categories?: string[];
   publishedAt?: string;
-  body?: any; // Portable Text
+  body?: PortableTextContent;
   relatedPosts?: SanityPost[] | SanityReference[];
   featured?: boolean;
   
@@ -112,8 +132,8 @@ export interface SanitySEO {
 
 export interface SanityGeneralInfo extends SanityDocument {
   title: string;
-  mission?: any; // Portable Text
-  vision?: any; // Portable Text
+  mission?: PortableTextContent;
+  vision?: PortableTextContent;
   meetingInfo?: SanityMeetingInfo;
   contact?: SanityContactInfo;
   socialMedia?: SanitySocialLinks;
@@ -162,11 +182,11 @@ export interface SanityActivity extends SanityDocument {
   title: string;
   slug: SanitySlug;
   type: 'workshop' | 'hackathon' | 'study_group' | 'project_meeting' | 'social' | 'competition' | 'other';
-  description?: any; // Portable Text
+  description?: PortableTextContent;
   mainImage?: SanityImage;
   schedule?: SanitySchedule;
   location?: SanityActivityLocation;
-  organizers?: SanityReference[] | any[];
+  organizers?: SanityReference[] | SanityAuthor[];
   capacity?: SanityCapacity;
   requirements?: string[];
   resources?: SanityResource[];
@@ -193,11 +213,11 @@ export interface SanityResource extends SanityDocument {
   title: string;
   slug: SanitySlug;
   category: SanityResourceCategory;
-  description?: any; // Portable Text
+  description?: PortableTextContent;
   content?: SanityResourceContent[];
   difficulty?: 'beginner' | 'intermediate' | 'advanced';
   tags?: string[];
-  contributors?: SanityReference[] | any[];
+  contributors?: SanityReference[] | SanityAuthor[];
   relatedResources?: SanityReference[] | SanityResource[];
   publishedAt?: string;
   updatedAt?: string;
@@ -212,7 +232,7 @@ export interface SanityMember extends SanityDocument {
   role: 'member' | 'executive' | 'alumni';
   executivePosition?: string;
   avatar?: SanityImage;
-  bio?: any; // Portable Text
+  bio?: PortableTextContent;
   skills?: string[];
   socialLinks?: SanitySocialLinks;
   joinDate: string;
